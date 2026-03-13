@@ -1,98 +1,113 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
-
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import React from 'react';
+import { View, Text, Image, StyleSheet, SafeAreaView, StatusBar } from 'react-native';
 
 export default function HomeScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+    <SafeAreaView style={styles.container}>
+      {/* Menyesuaikan warna status bar di HP (Baterai, Jam, dll) agar serasi */}
+      <StatusBar barStyle="light-content" />
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+      {/* 1. BAGIAN FOTO PROFIL */}
+      {/* Pastikan file 'foto.jpg' ada di folder assets/images/ */}
+      <Image
+        source={require('../../assets/images/foto.jpg')} 
+        style={styles.profilePic}
+        resizeMode="cover"
+      />
+      
+      {/* 2. BAGIAN NAMA DAN IDENTITAS */}
+      <Text style={styles.name}>Stephani Della Christin Zai</Text>
+      <Text style={styles.nim}>NIM: 243303621228</Text>
+      
+      {/* BAGIAN BARU: PROGRAM STUDI */}
+      <Text style={styles.prodi}>Program Studi: Sistem Informasi</Text>
+
+      {/* 3. BAGIAN BIO & QUOTE */}
+      <View style={styles.bioCard}>
+        <Text style={styles.bioText}>
+          🚀 Currently mastering React Native SDK 50.{"\n"}
+          Goal: Build goated apps!
+        </Text>
+        
+        {/* Garis pemisah tipis */}
+        <View style={styles.separator} />
+
+        <Text style={styles.quoteText}>
+          "Coding adalah seni mengubah logika menjadi solusi nyata."
+        </Text>
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
+  container: {
+    flex: 1,
+    backgroundColor: '#121212', // Dark Charcoal
     alignItems: 'center',
-    gap: 8,
+    justifyContent: 'center',
+    padding: 20,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  profilePic: {
+    width: 150,
+    height: 150,
+    borderRadius: 75, // Membuat bulat sempurna
+    borderWidth: 4,
+    borderColor: '#00d4ff', // Biru Neon
+    marginBottom: 20,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  name: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    color: '#ffffff',
+    marginBottom: 5,
+  },
+  nim: {
+    fontSize: 16,
+    color: '#00d4ff', 
+    fontWeight: '600',
+    marginBottom: 4,
+  },
+  prodi: {
+    fontSize: 15,
+    color: '#bbbbbb', // Abu-abu terang untuk hierarki visual
+    fontWeight: '400',
+    marginBottom: 30, // Jarak lebih lebar sebelum masuk ke Bio Card
+    fontStyle: 'italic',
+  },
+  bioCard: {
+    backgroundColor: '#1e1e1e', // Kartu sedikit lebih terang
+    padding: 25,
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor: '#333',
+    width: '100%',
+    // Shadow untuk Android
+    elevation: 8, 
+    // Shadow untuk iOS
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4.65,
+  },
+  bioText: {
+    color: '#e0e0e0',
+    textAlign: 'center',
+    lineHeight: 22,
+    fontSize: 15,
+  },
+  separator: {
+    height: 1,
+    backgroundColor: '#444',
+    marginVertical: 15,
+    width: '50%',
+    alignSelf: 'center',
+  },
+  quoteText: {
+    color: '#00d4ff',
+    textAlign: 'center',
+    fontStyle: 'italic',
+    fontSize: 14,
+    opacity: 0.9,
   },
 });
